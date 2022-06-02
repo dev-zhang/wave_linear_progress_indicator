@@ -1,7 +1,9 @@
 name: wave_linear_progress_indicator
-description: A new Flutter package project.
+description: A linear progress indicator with wave animation in Flutter.
 version: 0.0.1
-homepage:
+homepage: https://github.com/dev-zhang/wave_linear_progress_indicator
+repository: https://github.com/dev-zhang/wave_linear_progress_indicator
+
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
