@@ -2,7 +2,7 @@
  * File Created: 2022-06-02 15:11:39
  * Author: ZhangYu (devzhangyu@163.com)
  * -----
- * Last Modified: 2022-06-06 16:14:09
+ * Last Modified: 2022-06-06 18:08:15
  * Modified By: ZhangYu (devzhangyu@163.com>)
  */
 
@@ -63,20 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               const SizedBox(height: 20),
-              LinearProgressIndicator(
-                value: _progress,
-                minHeight: 10,
-              ),
-              const SizedBox(height: 20),
-              Slider(
-                value: _progress,
-                onChanged: (value) {
-                  setState(() {
-                    _progress = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
               SizedBox(
                 height: 19,
                 child: StreamBuilder<double>(
@@ -91,6 +77,30 @@ class _MyHomePageState extends State<MyHomePage> {
                         // waveColor: Colors.orange,
                       );
                     }),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 19,
+                child: WaveLinearProgressIndicator(
+                  value: _progress,
+                  enableBounceAnimation: true,
+                  waveColor: Colors.orange,
+                  backgroundColor: Colors.grey[150],
+                ),
+              ),
+              const SizedBox(height: 20),
+              LinearProgressIndicator(
+                value: _progress,
+                minHeight: 10,
+              ),
+              const SizedBox(height: 20),
+              Slider(
+                value: _progress,
+                onChanged: (value) {
+                  setState(() {
+                    _progress = value;
+                  });
+                },
               ),
             ],
           ),
