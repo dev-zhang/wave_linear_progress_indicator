@@ -2,7 +2,7 @@
  * File Created: 2022-06-06 16:15:45
  * Author: ZhangYu (devzhangyu@163.com)
  * -----
- * Last Modified: 2022-06-06 16:18:35
+ * Last Modified: 2022-06-06 19:10:04
  * Modified By: ZhangYu (devzhangyu@163.com>)
  */
 
@@ -75,7 +75,7 @@ class WaveIndicatorPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
     final count = (size.width / (waveStep + waveWidth)).ceil();
 
-    final height = size.height * 1.5;
+    final height = size.height * 2.0;
 
     final realWidth = (waveWidth + waveStep) * count;
     final offset = -realWidth * repaint.value;

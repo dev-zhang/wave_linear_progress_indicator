@@ -2,7 +2,7 @@
  * File Created: 2022-06-02 15:11:39
  * Author: ZhangYu (devzhangyu@163.com)
  * -----
- * Last Modified: 2022-06-06 18:08:15
+ * Last Modified: 2022-06-07 11:50:15
  * Modified By: ZhangYu (devzhangyu@163.com>)
  */
 
@@ -55,43 +55,36 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 19,
-                child: WaveLinearProgressIndicator(
-                  value: _progress,
-                  enableBounceAnimation: true,
-                ),
+              WaveLinearProgressIndicator(
+                value: _progress,
+                enableBounceAnimation: true,
               ),
               const SizedBox(height: 20),
-              SizedBox(
-                height: 19,
-                child: StreamBuilder<double>(
-                    stream: _getDownloadProgress(),
-                    builder: (context, snapshot) {
-                      double progress = 0;
-                      if (snapshot.hasData) {
-                        progress = snapshot.data!;
-                      }
-                      return WaveLinearProgressIndicator(
-                        value: progress,
-                        // waveColor: Colors.orange,
-                      );
-                    }),
-              ),
+              StreamBuilder<double>(
+                  stream: _getDownloadProgress(),
+                  builder: (context, snapshot) {
+                    double progress = 0;
+                    if (snapshot.hasData) {
+                      progress = snapshot.data!;
+                    }
+                    return WaveLinearProgressIndicator(
+                      value: progress,
+                      // waveColor: Colors.orange,
+                    );
+                  }),
               const SizedBox(height: 20),
-              SizedBox(
-                height: 19,
-                child: WaveLinearProgressIndicator(
-                  value: _progress,
-                  enableBounceAnimation: true,
-                  waveColor: Colors.orange,
-                  backgroundColor: Colors.grey[150],
-                ),
+              WaveLinearProgressIndicator(
+                value: _progress,
+                enableBounceAnimation: true,
+                waveColor: Colors.orange,
+                backgroundColor: Colors.grey[150],
+                minHeight: 20,
               ),
               const SizedBox(height: 20),
               LinearProgressIndicator(
                 value: _progress,
                 minHeight: 10,
+                backgroundColor: Colors.orange,
               ),
               const SizedBox(height: 20),
               Slider(

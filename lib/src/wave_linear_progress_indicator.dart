@@ -2,7 +2,7 @@
  * File Created: 2022-06-02 14:24:09
  * Author: ZhangYu (devzhangyu@163.com)
  * -----
- * Last Modified: 2022-06-06 16:32:08
+ * Last Modified: 2022-06-07 11:47:47
  * Modified By: ZhangYu (devzhangyu@163.com>)
  */
 
@@ -17,6 +17,7 @@ class WaveLinearProgressIndicator extends ProgressIndicator {
     required double value,
     Color? backgroundColor = const Color(0xFFECF4F2),
     Color? color,
+    this.minHeight,
     this.borderRadius = 18,
     this.waveWidth = 10,
     this.waveColor = const Color(0x21FFFFFF),
@@ -30,6 +31,9 @@ class WaveLinearProgressIndicator extends ProgressIndicator {
           backgroundColor: backgroundColor,
           color: color,
         );
+
+  /// The minimum height of the line used to draw the linear indicator.
+  final double? minHeight;
 
   /// Rounded corners of the progress indicator
   final double? borderRadius;
@@ -71,9 +75,8 @@ class _WaveLinearProgressIndicatorState
     return BoxDecoration(
       gradient: const LinearGradient(
         colors: [
-          Color(0xFF7ED1C7),
-          Color(0xFF7ED1C7),
-          Color(0xFF86BFB9),
+          Color(0xFF9DF3E9),
+          Color(0xFF71E4D6),
         ],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
@@ -87,13 +90,19 @@ class _WaveLinearProgressIndicatorState
   }
 
   Color get _backgroundColor {
-    final ProgressIndicatorThemeData indicatorTheme =
-        ProgressIndicatorTheme.of(context);
     final Color trackColor = widget.backgroundColor ??
-        indicatorTheme.linearTrackColor ??
+        _indicatorTheme.linearTrackColor ??
         Theme.of(context).colorScheme.background;
     return trackColor;
   }
+
+  double get _minHeight =>
+      widget.minHeight ?? _indicatorTheme.linearMinHeight ?? 9;
+
+  double get _progressLabelHeight => _minHeight + 4.5 * 2;
+
+  ProgressIndicatorThemeData get _indicatorTheme =>
+      ProgressIndicatorTheme.of(context);
 
   @override
   void initState() {
@@ -147,28 +156,33 @@ class _WaveLinearProgressIndicatorState
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(
+      constraints: BoxConstraints(
         minWidth: double.infinity,
-        minHeight: 19,
+        minHeight: _progressLabelHeight,
       ),
       child: LayoutBuilder(builder: (context, constraints) {
+        // print('=======layout===$constraints');
         return Stack(
           alignment: Alignment.center,
+          clipBehavior: Clip.none,
           children: [
-            Positioned(
-              left: 0,
-              right: 0,
-              height: 9,
-              child: CustomPaint(
-                painter: WaveIndicatorPainter(
-                  repaint: _waveController,
-                  progressAnimation: _progressAnimation,
-                  backgroundColor: _backgroundColor,
-                  borderRadius: widget.borderRadius,
-                  waveWidth: widget.waveWidth,
-                  waveBackgroundColor: widget.waveBackgroundColor,
-                  waveStep: widget.waveStep,
-                  waveColor: widget.waveColor,
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: _minHeight,
+                  minWidth: double.infinity,
+                ),
+                child: CustomPaint(
+                  painter: WaveIndicatorPainter(
+                    repaint: _waveController,
+                    progressAnimation: _progressAnimation,
+                    backgroundColor: _backgroundColor,
+                    borderRadius: widget.borderRadius,
+                    waveWidth: widget.waveWidth,
+                    waveBackgroundColor: widget.waveBackgroundColor,
+                    waveStep: widget.waveStep,
+                    waveColor: widget.waveColor,
+                  ),
                 ),
               ),
             ),
@@ -190,8 +204,7 @@ class _WaveLinearProgressIndicatorState
         left = left.clamp(0, size.width - progressLabelWidth);
         return Positioned(
           left: left,
-          top: 0,
-          height: 19,
+          height: _progressLabelHeight,
           child: ProgressLabel(
             progress: progress,
             key: _progressLabelKey,
